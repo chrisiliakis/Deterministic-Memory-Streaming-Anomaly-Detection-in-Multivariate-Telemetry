@@ -17,8 +17,7 @@ template <
     size_t Channels,
     size_t ShingleSize = 4,
     size_t NumTrees = 32,
-    size_t WindowSize = 256
->
+    size_t WindowSize = 256>
 class RandomCutForest {
 public:
     static constexpr size_t kEmbeddedDim = Channels * ShingleSize;
@@ -75,7 +74,6 @@ public:
             const float thresh = score_digest_.quantile(quantile_cutoff_);
             result.adaptive_threshold = std::max(thresh, 6.0f);
             result.is_anomaly = (mean_codisp > result.adaptive_threshold);
-
             if (!result.is_anomaly) {
                 score_digest_.add(mean_codisp);
             }

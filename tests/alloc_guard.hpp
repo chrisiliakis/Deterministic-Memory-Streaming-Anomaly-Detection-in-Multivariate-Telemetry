@@ -11,7 +11,6 @@ inline thread_local bool g_DisallowAllocations = false;
 
 class ScopedAllocGuard {
     size_t start_allocs_{0};
-
 public:
     ScopedAllocGuard() noexcept : start_allocs_(g_heap_allocations.load()) {
         g_DisallowAllocations = true;

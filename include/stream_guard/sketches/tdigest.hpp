@@ -23,7 +23,6 @@ private:
     std::array<Centroid, MaxCentroids> scratch_{};
     std::array<Centroid, MaxCentroids + BufferSize> work_{};
     std::array<float, BufferSize> unmerged_{};
-
     size_t num_centroids_{0};
     size_t num_unmerged_{0};
     double total_weight_{0.0};
@@ -42,16 +41,18 @@ private:
         double decayed_existing_weight = 0.0;
         for (size_t i = 0; i < num_centroids_; ++i) {
             Centroid c = centroids_[i];
-            c.weight *= 0.995; // Exponential decay prevents infinite-stream freezing
+            c.weight *= 0.995;
             decayed_existing_weight += c.weight;
             work_[total_items++] = c;
         }
+
         for (size_t i = 0; i < num_unmerged_; ++i) {
             const double v = static_cast<double>(unmerged_[i]);
             if (v < min_val_) min_val_ = v;
             if (v > max_val_) max_val_ = v;
             work_[total_items++] = Centroid{v, 1.0};
         }
+
         const double new_weight = decayed_existing_weight + static_cast<double>(num_unmerged_);
         num_unmerged_ = 0;
 

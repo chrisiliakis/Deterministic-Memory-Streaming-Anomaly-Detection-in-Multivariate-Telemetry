@@ -11,8 +11,7 @@ option(STREAM_GUARD_ENABLE_TSAN "Enable Thread Sanitizer" OFF)
 add_library(stream_guard INTERFACE)
 target_include_directories(stream_guard INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_compile_options(stream_guard INTERFACE
-    -Wall -Wextra -Wpedantic -Werror -O3 -march=native
-)
+    -Wall -Wextra -Wpedantic -O3)
 
 if(UNIX AND NOT APPLE)
     target_link_libraries(stream_guard INTERFACE rt pthread)
@@ -46,6 +45,7 @@ set(BENCHMARK_ENABLE_INSTALL OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest googlebenchmark)
 
 enable_testing()
+
 add_executable(stream_guard_tests tests/test_all.cpp)
 target_link_libraries(stream_guard_tests PRIVATE stream_guard GTest::gtest_main)
 add_test(NAME StreamGuardUnitTests COMMAND stream_guard_tests)

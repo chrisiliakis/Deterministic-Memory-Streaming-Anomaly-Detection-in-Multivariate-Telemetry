@@ -9,7 +9,6 @@ namespace stream_guard {
 template <size_t WindowSize>
 class SlidingWindowSampler {
     static_assert(WindowSize > 0);
-
 private:
     size_t cursor_{0};
     size_t active_{0};
@@ -45,7 +44,6 @@ public:
 template <size_t Capacity>
 class ReservoirSampler {
     static_assert(Capacity > 0);
-
 private:
     uint64_t stream_count_{0};
 
